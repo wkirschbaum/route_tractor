@@ -1,0 +1,1 @@
+require 'route_tractor/railtie' if defined?(Rails)

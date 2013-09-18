@@ -1,0 +1,6 @@
+lib/**/*.rb
+lib/**/*.rake
+bin/*
+- 
+features/**/*.feature
+LICENSE.txt
