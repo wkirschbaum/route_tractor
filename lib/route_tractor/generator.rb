@@ -1,65 +1,37 @@
 require 'rails'
 
-module RouteTractor 
+module RouteTractor
   class Generator
-    REGEX = /([A-Z]+\s+)?(\/.*)/
+    FILE_PATH = "spec/routing/all_routes_spec.rb"
 
     def self.generate
 
+      # Create the spec/routing/ directory if it doesn't exist
       FileUtils.mkdir_p('spec/routing/')
 
-      # prepare spec file
-      self.inject_header_code
-
-      puts "### Processing routes data..."
-
-      self.load_routes
-
-      # Finish-up spec file
-      self.inject_footer_code
-
-      puts "### Finished!"
-      puts "### Bye!"
-    end
-
-    def self.inject_header_code
-      header_text = "require \"spec_helper\"\ndescribe \"All routes\" do\n"
-      system('touch spec/routing/all_routes_spec.rb')
-      system("echo '#{header_text}' > spec/routing/all_routes_spec.rb")
-    end
-
-    def self.inject_footer_code
-      footer_text = "end"
-      system("echo '#{footer_text}' >> spec/routing/all_routes_spec.rb")
-    end
-
-    def self.generate_route_spec(http_verb, route, hash)
-      spec_str = "it { { :#{http_verb} => \"#{route}\" }.should route_to#{hash} }"
-      system("echo '#{spec_str}' >> spec/routing/all_routes_spec.rb")
-    end
-
-    def self.load_routes
-      puts "### Loading routes..."
-
-      Rails.application.routes.routes.each do |route|
-        match_data = REGEX.match(route.to_s)
-        next unless match_data
-        verb = match_data[1].strip
-
-        path = match_data[2].strip.gsub(/\(.:.*\)/, '').gsub(/:\w*/, '1').split[0]
-
-        if verb == 'ANY'
-          ["POST", "PUT", "GET", "DELETE"].each do |verb_variation| 
-            routing_options = Rails.application.routes.recognize_path(path, :method => verb_variation).to_s.gsub(/{/, '(').gsub(/}/, ')')
-            verb_variation.downcase!
-            generate_route_spec(verb_variation.downcase, path, routing_options)
-          end
-        else
-          routing_options = Rails.application.routes.recognize_path(path, :method => verb).to_s.gsub(/{/, '(').gsub(/}/, ')')
-          verb.downcase!
-          generate_route_spec(verb.downcase, path, routing_options)
+      unless File.exists?(FILE_PATH)
+        FileUtils.touch(FILE_PATH)
+      else
+        puts "A file with the name spec/routing/all_routes_spec.rb has been found. Do you want to override it? [y/n]"
+        input = STDIN.gets.downcase
+        unless input == 'y'
+          puts "### Done!"
+          return
         end
       end
+
+      # prepare spec file
+      puts "### Building spec file..."
+      spec_file = File.open('spec/routing/all_routes_spec.rb', 'w') do |f|
+        builder = Builder.new(f)
+
+        builder.build_header
+        builder.build_routes
+        builder.build_footer
+      end
+
+      puts "### Done!"
     end
   end
+
 end
