@@ -1,4 +1,4 @@
-# Route Tractor
+# Route Tractor [![Code Climate](https://codeclimate.com/github/wkirschbaum/route_tractor.png)](https://codeclimate.com/github/wkirschbaum/route_tractor)
 
 ## Description
 This gem generates RSpec tests for Rails routes.
