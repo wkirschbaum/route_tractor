@@ -1,4 +1,4 @@
-= route_tractor
+= Route Tractor
 
 == Description
 This gem generates RSpec tests for Rails routes.
@@ -21,5 +21,5 @@ Running this task will add a file in your spec/routes/ directory named all_route
 * Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
 
 == Authors
-(Wilhelm Kirschbaum)[https://github.com/wkirschbaum]
-(Ile Eftimov)[https://github.com/fteem]
+[Wilhelm Kirschbaum](https://github.com/wkirschbaum)
+[Ile Eftimov](https://github.com/fteem)
