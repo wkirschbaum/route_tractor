@@ -23,3 +23,4 @@ Running this task will add a file in your spec/routes/ directory named all_route
 ## Authors
 [Wilhelm Kirschbaum](https://github.com/wkirschbaum)  
 [Ile Eftimov](https://github.com/fteem)
+
