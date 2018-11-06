@@ -1,10 +1,10 @@
 source "http://rubygems.org"
 
-gem "rails", "~> 3"
+gem "rails", "~> 3.2"
 
 group :development do
-  gem "rdoc", "~> 3.12"
-  gem "bundler", "~> 1.0"
+  gem "rdoc"
+  gem "bundler"
 end
 
 group :testing, :development do
